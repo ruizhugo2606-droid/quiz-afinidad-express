@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#6d3cf5">
+  <meta name="theme-color" content="#06030f">
   <meta name="description" content="Quiz de Afinidad Express: descubre qué tan compatible eres con tu futuro compañero de equipo respondiendo 6 preguntas.">
   <title>Quiz de Afinidad Express</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236d3cf5'/%3E%3Cpath d='M32 49s-15-9-15-20a8 8 0 0 1 15-4 8 8 0 0 1 15 4c0 11-15 20-15 20z' fill='white'/%3E%3C/svg%3E">
@@ -76,10 +76,12 @@
   </svg>
 
   <div class="bg-decor" aria-hidden="true">
+    <div class="bg-aurora"></div>
     <div class="blob blob--one"></div>
     <div class="blob blob--two"></div>
     <div class="blob blob--three"></div>
     <div class="grid-glow"></div>
+    <div class="particles" id="particles"></div>
   </div>
 
   <main class="app-shell" id="app">
@@ -113,38 +115,38 @@
               </filter>
             </defs>
 
-            <circle cx="260" cy="222" r="186" fill="#f1eeff"/>
-            <circle cx="260" cy="222" r="186" fill="none" stroke="#ded7ff" stroke-width="2" stroke-dasharray="4 13" stroke-linecap="round" opacity=".85"/>
+            <circle cx="260" cy="222" r="186" fill="#120d2b"/>
+            <circle cx="260" cy="222" r="186" fill="none" stroke="#3a2f6b" stroke-width="2" stroke-dasharray="4 13" stroke-linecap="round" opacity=".85"/>
             <circle cx="408" cy="90" r="90" fill="url(#g-glow)"/>
             <circle cx="105" cy="345" r="100" fill="url(#g-glow)"/>
 
             <path d="M132 156c32-42 74-65 128-65s96 23 128 65" fill="none" stroke="url(#g-connection)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 12" opacity=".55"/>
 
             <g transform="rotate(-6 140 215)" filter="url(#soft-shadow)">
-              <rect x="52" y="98" width="176" height="238" rx="30" fill="#ffffff"/>
-              <rect x="52" y="98" width="176" height="238" rx="30" fill="none" stroke="#eeeaff" stroke-width="2"/>
+              <rect x="52" y="98" width="176" height="238" rx="30" fill="#1a1438"/>
+              <rect x="52" y="98" width="176" height="238" rx="30" fill="none" stroke="#332a63" stroke-width="2"/>
               <circle cx="140" cy="180" r="48" fill="#ffdcc5"/>
               <path d="M92 180c-2-34 21-58 49-58s48 21 47 51c-12-14-27-21-47-21-21 0-36 8-49 23z" fill="#33235f"/>
               <circle cx="124" cy="180" r="4" fill="#33235f"/>
               <circle cx="156" cy="180" r="4" fill="#33235f"/>
               <path d="M129 197c7 6 16 6 23 0" fill="none" stroke="#c96a5c" stroke-width="3" stroke-linecap="round"/>
-              <rect x="92" y="248" width="96" height="13" rx="6.5" fill="#e8e2ff"/>
-              <rect x="108" y="272" width="64" height="10" rx="5" fill="#f2efff"/>
+              <rect x="92" y="248" width="96" height="13" rx="6.5" fill="#2e2560"/>
+              <rect x="108" y="272" width="64" height="10" rx="5" fill="#241d4a"/>
               <circle cx="140" cy="306" r="18" fill="url(#g-purple)"/>
               <path d="m133 306 5 5 9-10" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
 
             <g transform="rotate(6 380 215)" filter="url(#soft-shadow)">
-              <rect x="292" y="98" width="176" height="238" rx="30" fill="#ffffff"/>
-              <rect x="292" y="98" width="176" height="238" rx="30" fill="none" stroke="#e8f1ff" stroke-width="2"/>
+              <rect x="292" y="98" width="176" height="238" rx="30" fill="#1a1438"/>
+              <rect x="292" y="98" width="176" height="238" rx="30" fill="none" stroke="#2b3768" stroke-width="2"/>
               <circle cx="380" cy="180" r="48" fill="#f3c9aa"/>
               <path d="M332 180c-2-35 22-60 50-59 27 1 47 21 46 55-9-6-16-14-22-25-15 19-41 26-74 29z" fill="#1f2a52"/>
               <circle cx="404" cy="162" r="15" fill="#1f2a52"/>
               <circle cx="364" cy="180" r="4" fill="#1f2a52"/>
               <circle cx="396" cy="180" r="4" fill="#1f2a52"/>
               <path d="M369 197c7 6 16 6 23 0" fill="none" stroke="#b8544c" stroke-width="3" stroke-linecap="round"/>
-              <rect x="332" y="248" width="96" height="13" rx="6.5" fill="#e2eeff"/>
-              <rect x="348" y="272" width="64" height="10" rx="5" fill="#f0f6ff"/>
+              <rect x="332" y="248" width="96" height="13" rx="6.5" fill="#233159"/>
+              <rect x="348" y="272" width="64" height="10" rx="5" fill="#1d2947"/>
               <circle cx="380" cy="306" r="18" fill="url(#g-blue)"/>
               <path d="m373 306 5 5 9-10" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
@@ -156,22 +158,22 @@
             </g>
 
             <g filter="url(#mini-shadow)" transform="translate(260 300)">
-              <rect x="-49" y="-21" width="98" height="42" rx="21" fill="#ffffff"/>
+              <rect x="-49" y="-21" width="98" height="42" rx="21" fill="#1b1440"/>
               <text x="0" y="1" text-anchor="middle" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" fill="#5b2bd6">92%</text>
             </g>
 
             <g transform="translate(58 56) rotate(-8)">
-              <rect x="0" y="0" width="132" height="40" rx="20" fill="#ffffff" filter="url(#mini-shadow)"/>
-              <circle cx="22" cy="20" r="12" fill="#efe9ff"/>
-              <path d="M18 20h8M22 16v8" stroke="#6d3cf5" stroke-width="2" stroke-linecap="round"/>
-              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="700" fill="#3b2c6e">6 preguntas</text>
+              <rect x="0" y="0" width="132" height="40" rx="20" fill="#1b1440" filter="url(#mini-shadow)"/>
+              <circle cx="22" cy="20" r="12" fill="#2b2360"/>
+              <path d="M18 20h8M22 16v8" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="700" fill="#e9e4ff">6 preguntas</text>
             </g>
 
             <g transform="translate(344 52) rotate(7)">
-              <rect x="0" y="0" width="120" height="40" rx="20" fill="#ffffff" filter="url(#mini-shadow)"/>
-              <circle cx="22" cy="20" r="12" fill="#e7f1ff"/>
-              <path d="M17 24V17m5 7v-4m5 4v-9" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
-              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="700" fill="#3b2c6e">Resultado</text>
+              <rect x="0" y="0" width="120" height="40" rx="20" fill="#1b1440" filter="url(#mini-shadow)"/>
+              <circle cx="22" cy="20" r="12" fill="#152a4d"/>
+              <path d="M17 24V17m5 7v-4m5 4v-9" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="700" fill="#e9e4ff">Resultado</text>
             </g>
 
             <g fill="#8b5cff" opacity=".65">

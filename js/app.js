@@ -3,43 +3,58 @@
 
   const QUESTIONS = [
     {
-      text: "¿Qué tipo de música prefieres?",
-      options: ["Pop", "Rock", "Electrónica", "Regional mexicano"]
-    },
-    {
-      text: "¿Cómo reaccionas cuando tienes mucho trabajo?",
+      text: "¿Cuál es tu combustible principal para concentrarte?",
       options: [
-        "Me organizo y hago una lista",
-        "Trabajo bajo presión",
-        "Pido ayuda",
-        "Me estreso, pero lo resuelvo"
+        "Café negro / expreso",
+        "Té / Infusiones",
+        "Bebida energética o refresco",
+        "Pura agua mineral / natural"
       ]
     },
     {
-      text: "¿En qué horario prefieres trabajar?",
-      options: ["Por la mañana", "Por la tarde", "Por la noche", "En cualquier horario"]
-    },
-    {
-      text: "¿Qué haces cuando surge un problema en un proyecto?",
+      text: "¿Cómo prefieres trabajar en grupo?",
       options: [
-        "Busco una solución inmediatamente",
-        "Investigo antes de actuar",
-        "Consulto con mis compañeros",
-        "Espero indicaciones"
+        "Llamada en Google Meet / Discord mientras programamos",
+        "Cada quien hace su parte en silencio y juntamos por GitHub",
+        "Avances por mensajes rápidos de WhatsApp",
+        "Reunirnos presencialmente para trabajar todos juntos."
       ]
     },
     {
-      text: "¿Cómo prefieres trabajar?",
+      text: "¿Cuál es tu mayor superpoder (o defecto) al trabajar en equipo?",
       options: [
-        "Individualmente",
-        "En equipo",
-        "Depende del proyecto",
-        "Me adapto a cualquier situación"
+        "Desaparecer misteriosamente y aparecer con la chamba lista a última hora",
+        "Sobrevivir a base de cafeína pura y puro pánico",
+        "El que organiza todo y pone orden en el caos",
+        "El que solo manda stickers y moral support"
       ]
     },
     {
-      text: "¿Qué valoras más en un compañero?",
-      options: ["Responsabilidad", "Creatividad", "Comunicación", "Compromiso"]
+      text: "Si el equipo fuera una película de terror, ¿qué papel te tocaría?",
+      options: [
+        "El que se separa del grupo por curiosidad y se muere primero",
+        "El que encuentra la solución técnica pero nadie le hace caso",
+        "El que grita por todo pero sobrevive de milagro",
+        "El villano (el que deja los bugs para el mero día de la entrega)"
+      ]
+    },
+    {
+      text: "¿Qué harías si tu código funciona perfectamente y de repente deja de funcionar?",
+      options: [
+        "Reviso cada línea hasta encontrar el error.",
+        "Busco el error en Google o ChatGPT.",
+        "Reinicio todo esperando que se solucione mágicamente.",
+        "Le echo la culpa a la computadora."
+      ]
+    },
+    {
+      text: "¿Qué situación te desespera más durante un proyecto?",
+      options: [
+        "Que nadie responda los mensajes.",
+        "Que cambien los requisitos a última hora.",
+        "Que alguien no cumpla con su parte.",
+        "Que todo falle justo antes de entregar."
+      ]
     }
   ];
 
@@ -107,7 +122,52 @@
 
   let affinityAnimationFrame = null;
 
+  const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function initParticles() {
+    const container = document.getElementById("particles");
+
+    if (!container) {
+      return;
+    }
+
+    container.innerHTML = "";
+
+    if (reduceMotionQuery.matches) {
+      return;
+    }
+
+    const count = window.innerWidth < 640 ? 18 : 32;
+    const fragment = document.createDocumentFragment();
+
+    for (let index = 0; index < count; index += 1) {
+      const particle = document.createElement("span");
+      const size = 2 + Math.random() * 4;
+
+      particle.className = "particle";
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.animationDuration = `${12 + Math.random() * 18}s`;
+      particle.style.animationDelay = `${-Math.random() * 30}s`;
+      particle.style.setProperty("--drift", `${(Math.random() - 0.5) * 90}px`);
+      particle.style.setProperty("--peak-opacity", (0.25 + Math.random() * 0.5).toFixed(2));
+
+      fragment.appendChild(particle);
+    }
+
+    container.appendChild(fragment);
+  }
+
   function init() {
+    initParticles();
+
+    if (reduceMotionQuery.addEventListener) {
+      reduceMotionQuery.addEventListener("change", initParticles);
+    } else if (reduceMotionQuery.addListener) {
+      reduceMotionQuery.addListener(initParticles);
+    }
+
     dom.start.addEventListener("click", () => showScreen("register"));
     dom.registerForm.addEventListener("submit", handleRegister);
     dom.name1.addEventListener("input", () => clearFieldError(1));
