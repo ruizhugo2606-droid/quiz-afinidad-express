@@ -59,18 +59,18 @@
   ];
 
   const RESULT_MESSAGES = [
-    { min: 90, text: "¡Equipo increíble! Tienen una gran conexión." },
-    { min: 70, text: "¡Muy buena afinidad! Pueden formar un gran equipo." },
-    { min: 50, text: "Tienen varias cosas en común, pero también pueden complementarse." },
-    { min: 30, text: "Son diferentes, pero eso puede aportar nuevas ideas." },
-    { min: 0, text: "¡Los opuestos se atraen! Tienen una oportunidad para aprender juntos." }
+    { min: 90, text: "¡Equipo increíble! Tienen una conexión brutal." },
+    { min: 70, text: "¡Muy buena afinidad! Harán un trabajo excelente." },
+    { min: 50, text: "Tienen varias cosas en común y se complementan bien." },
+    { min: 30, text: "Son diferentes, pero eso aporta ideas muy variadas." },
+    { min: 0, text: "¡Los opuestos se atraen! Tienen el reto de unirse más." }
   ];
 
   const state = {
-    names: ["", ""],
+    names: [],
     currentPlayer: 0,
     currentQuestion: 0,
-    answers: [[], []],
+    answers: [], // Matriz dinamica: [jugadorIndex][preguntaIndex]
     selected: null,
     results: null
   };
@@ -81,12 +81,8 @@
     screens: Array.from(document.querySelectorAll(".screen")),
     start: $("#btn-start"),
     registerForm: $("#register-form"),
-    name1: $("#name-1"),
-    name2: $("#name-2"),
-    field1: $("#field-name-1"),
-    field2: $("#field-name-2"),
-    error1: $("#error-name-1"),
-    error2: $("#error-name-2"),
+    playerCountSelect: $("#player-count"),
+    playersInputs: $("#players-inputs"),
     formError: $("#form-error"),
     quizPlayerBadge: $("#quiz-player-badge"),
     quizPlayerName: $("#quiz-player-name"),
@@ -104,11 +100,8 @@
     handoffNextName: $("#handoff-next-name"),
     handoffBtnName: $("#handoff-btn-name"),
     btnHandoff: $("#btn-handoff"),
-    finishName1: $("#finish-name-1"),
-    finishName2: $("#finish-name-2"),
+    finishNamesText: $("#finish-names-text"),
     btnResults: $("#btn-results"),
-    resultName1: $("#result-name-1"),
-    resultName2: $("#result-name-2"),
     affinityRing: $("#affinity-ring"),
     affinityValue: $("#affinity-value"),
     resultMessage: $("#result-message"),
@@ -121,21 +114,13 @@
   };
 
   let affinityAnimationFrame = null;
-
   const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function initParticles() {
     const container = document.getElementById("particles");
-
-    if (!container) {
-      return;
-    }
-
+    if (!container) return;
     container.innerHTML = "";
-
-    if (reduceMotionQuery.matches) {
-      return;
-    }
+    if (reduceMotionQuery.matches) return;
 
     const count = window.innerWidth < 640 ? 18 : 32;
     const fragment = document.createDocumentFragment();
@@ -143,7 +128,6 @@
     for (let index = 0; index < count; index += 1) {
       const particle = document.createElement("span");
       const size = 2 + Math.random() * 4;
-
       particle.className = "particle";
       particle.style.left = `${Math.random() * 100}%`;
       particle.style.width = `${size}px`;
@@ -152,30 +136,45 @@
       particle.style.animationDelay = `${-Math.random() * 30}s`;
       particle.style.setProperty("--drift", `${(Math.random() - 0.5) * 90}px`);
       particle.style.setProperty("--peak-opacity", (0.25 + Math.random() * 0.5).toFixed(2));
-
       fragment.appendChild(particle);
     }
-
     container.appendChild(fragment);
+  }
+
+  function renderPlayerInputs() {
+    const count = parseInt(dom.playerCountSelect.value, 10);
+    dom.playersInputs.innerHTML = "";
+
+    for (let i = 0; i < count; i++) {
+      const field = document.createElement("div");
+      field.className = "field";
+      field.style.marginBottom = "12px";
+      field.innerHTML = `
+        <label class="field-label" for="name-${i}">
+          <span class="player-dot player-dot--1">${i + 1}</span>
+          Participante ${i + 1}
+        </label>
+        <div class="input-wrap">
+          <svg class="icon input-icon"><use href="#icon-user"></use></svg>
+          <input type="text" id="name-${i}" name="name-${i}" placeholder="Ej. Participante ${i + 1}" autocomplete="off" maxlength="24" required>
+        </div>
+        <span class="field-error" id="error-name-${i}" role="alert"></span>
+      `;
+      dom.playersInputs.appendChild(field);
+    }
   }
 
   function init() {
     initParticles();
+    renderPlayerInputs();
 
-    if (reduceMotionQuery.addEventListener) {
-      reduceMotionQuery.addEventListener("change", initParticles);
-    } else if (reduceMotionQuery.addListener) {
-      reduceMotionQuery.addListener(initParticles);
-    }
-
+    dom.playerCountSelect.addEventListener("change", renderPlayerInputs);
     dom.start.addEventListener("click", () => showScreen("register"));
     dom.registerForm.addEventListener("submit", handleRegister);
-    dom.name1.addEventListener("input", () => clearFieldError(1));
-    dom.name2.addEventListener("input", () => clearFieldError(2));
     dom.btnNext.addEventListener("click", goNext);
     dom.btnPrev.addEventListener("click", goPrevious);
     dom.options.addEventListener("keydown", handleOptionKeydown);
-    dom.btnHandoff.addEventListener("click", startSecondPlayer);
+    dom.btnHandoff.addEventListener("click", startNextPlayerTurn);
     dom.btnResults.addEventListener("click", showResults);
     dom.btnRepeat.addEventListener("click", repeatQuiz);
     dom.goHomeButtons.forEach((button) => button.addEventListener("click", goHome));
@@ -204,82 +203,51 @@
 
   function handleRegister(event) {
     event.preventDefault();
-
-    const name1 = normalizeName(dom.name1.value);
-    const name2 = normalizeName(dom.name2.value);
-
-    clearFieldError(1);
-    clearFieldError(2);
     dom.formError.textContent = "";
 
+    const count = parseInt(dom.playerCountSelect.value, 10);
+    const names = [];
     let isValid = true;
 
-    if (!name1) {
-      setFieldError(1, "Escribe el nombre del participante 1.");
-      isValid = false;
-    }
+    for (let i = 0; i < count; i++) {
+      const input = $(`#name-${i}`);
+      const errorSpan = $(`#error-name-${i}`);
+      const fieldDiv = input.closest(".field");
+      const val = normalizeName(input.value);
 
-    if (!name2) {
-      setFieldError(2, "Escribe el nombre del participante 2.");
-      isValid = false;
-    }
+      fieldDiv.classList.remove("has-error");
+      errorSpan.textContent = "";
 
-    if (
-      name1 &&
-      name2 &&
-      name1.toLocaleLowerCase("es") === name2.toLocaleLowerCase("es")
-    ) {
-      dom.formError.textContent =
-        "Los nombres deben ser diferentes para poder identificar a cada participante.";
-      setFieldError(2, "Elige un nombre distinto al del participante 1.");
-      isValid = false;
-    }
-
-    if (!isValid) {
-      if (!name1) {
-        dom.name1.focus();
+      if (!val) {
+        fieldDiv.classList.add("has-error");
+        errorSpan.textContent = `Escribe el nombre del participante ${i + 1}.`;
+        isValid = false;
+      } else if (names.map(n => n.toLowerCase()).includes(val.toLowerCase())) {
+        fieldDiv.classList.add("has-error");
+        errorSpan.textContent = "Los nombres deben ser diferentes.";
+        isValid = false;
       } else {
-        dom.name2.focus();
+        names.push(val);
       }
-      return;
     }
 
-    state.names = [name1, name2];
+    if (!isValid) return;
+
+    state.names = names;
     resetGame();
     showScreen("quiz");
     renderQuestion();
   }
 
-  function setFieldError(player, message) {
-    const field = player === 1 ? dom.field1 : dom.field2;
-    const input = player === 1 ? dom.name1 : dom.name2;
-    const error = player === 1 ? dom.error1 : dom.error2;
-
-    field.classList.add("has-error");
-    input.setAttribute("aria-invalid", "true");
-    error.textContent = message;
-  }
-
-  function clearFieldError(player) {
-    const field = player === 1 ? dom.field1 : dom.field2;
-    const input = player === 1 ? dom.name1 : dom.name2;
-    const error = player === 1 ? dom.error1 : dom.error2;
-
-    field.classList.remove("has-error");
-    input.removeAttribute("aria-invalid");
-    error.textContent = "";
-    dom.formError.textContent = "";
-  }
-
   function resetGame() {
     state.currentPlayer = 0;
     state.currentQuestion = 0;
-    state.answers = [[], []];
+    state.answers = Array.from({ length: state.names.length }, () => []);
     state.selected = null;
     state.results = null;
     clearQuizStage();
     dom.comparisonList.innerHTML = "";
-    dom.comparisonTotal.textContent = "0 de 6 coinciden";
+    dom.comparisonTotal.textContent = "Análisis grupal";
     dom.matchCount.textContent = "0";
     dom.diffCount.textContent = "0";
     dom.resultMessage.textContent = "Calculando afinidad...";
@@ -302,7 +270,6 @@
     dom.btnNextLabel.textContent = "Siguiente";
     dom.btnPrev.classList.add("is-hidden");
     dom.btnPrev.disabled = true;
-    dom.quizPlayerBadge.classList.remove("player-badge--two");
   }
 
   function renderQuestion() {
@@ -314,7 +281,7 @@
     state.selected = Number.isInteger(savedAnswer) ? savedAnswer : null;
 
     dom.quizPlayerName.textContent = state.names[playerIndex] || "Participante";
-    dom.quizPlayerBadge.classList.toggle("player-badge--two", playerIndex === 1);
+    dom.quizPlayerBadge.classList.toggle("player-badge--two", playerIndex % 2 === 1);
     dom.questionCounter.textContent = `Pregunta ${questionIndex + 1} de ${QUESTIONS.length}`;
     dom.questionIndex.textContent = String(questionIndex + 1).padStart(2, "0");
     dom.questionText.textContent = question.text;
@@ -336,7 +303,6 @@
       const key = document.createElement("span");
       key.className = "option-key";
       key.textContent = String.fromCharCode(65 + optionIndex);
-      key.setAttribute("aria-hidden", "true");
 
       const text = document.createElement("span");
       text.className = "option-text";
@@ -344,7 +310,6 @@
 
       const check = document.createElement("span");
       check.className = "option-check";
-      check.setAttribute("aria-hidden", "true");
       check.innerHTML = '<svg class="icon"><use href="#icon-check"></use></svg>';
 
       button.append(key, text, check);
@@ -370,7 +335,6 @@
 
   function updateSelectionUI() {
     const optionElements = Array.from(dom.options.querySelectorAll(".option"));
-
     optionElements.forEach((option, index) => {
       const isSelected = state.selected === index;
       option.classList.toggle("is-selected", isSelected);
@@ -391,7 +355,7 @@
     const isFirstQuestion = state.currentQuestion === 0;
 
     if (isLastQuestion) {
-      dom.btnNextLabel.textContent = state.currentPlayer === 0 ? "Terminar turno" : "Finalizar";
+      dom.btnNextLabel.textContent = state.currentPlayer < state.names.length - 1 ? "Terminar turno" : "Finalizar";
     } else {
       dom.btnNextLabel.textContent = "Siguiente";
     }
@@ -401,33 +365,19 @@
   }
 
   function handleOptionKeydown(event) {
-    const keys = ["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft", "Home", "End"];
-
-    if (!keys.includes(event.key)) {
-      return;
-    }
-
+    const keys = ["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"];
+    if (!keys.includes(event.key)) return;
     const optionElements = Array.from(dom.options.querySelectorAll(".option"));
     const currentIndex = optionElements.indexOf(document.activeElement);
-
-    if (currentIndex === -1) {
-      return;
-    }
+    if (currentIndex === -1) return;
 
     event.preventDefault();
-
     let nextIndex = currentIndex;
-
     if (event.key === "ArrowDown" || event.key === "ArrowRight") {
       nextIndex = (currentIndex + 1) % optionElements.length;
-    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+    } else {
       nextIndex = (currentIndex - 1 + optionElements.length) % optionElements.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = optionElements.length - 1;
     }
-
     optionElements[nextIndex].focus();
     selectOption(nextIndex);
   }
@@ -447,47 +397,44 @@
 
     state.answers[state.currentPlayer][state.currentQuestion] = state.selected;
 
+    // Si aún hay preguntas en el turno actual, avanzar
     if (state.currentQuestion < QUESTIONS.length - 1) {
       state.currentQuestion += 1;
       renderQuestion();
       return;
     }
 
-    if (state.currentPlayer === 0) {
-      showHandoff();
-    } else {
+    // Si es el último usuario y última pregunta, ir directo a finalizar
+    if (state.currentPlayer >= state.names.length - 1) {
       showFinish();
-    }
-  }
-
-  function goPrevious() {
-    if (state.currentQuestion === 0) {
       return;
     }
 
+    // Si hay más jugadores, mostrar pantalla de cambio de turno (handoff)
+    showHandoff();
+  }
+
+  function goPrevious() {
+    if (state.currentQuestion === 0) return;
     if (state.selected !== null) {
       state.answers[state.currentPlayer][state.currentQuestion] = state.selected;
     }
-
     state.currentQuestion -= 1;
     renderQuestion();
   }
 
   function showHandoff() {
-    state.currentPlayer = 1;
-    state.currentQuestion = 0;
-    state.answers[1] = [];
+    const nextPlayerIndex = state.currentPlayer + 1;
+    const nextPlayerName = state.names[nextPlayerIndex];
     clearQuizStage();
 
-    const nextPlayerName = state.names[1];
     dom.handoffNextName.textContent = nextPlayerName;
     dom.handoffBtnName.textContent = nextPlayerName;
-
     showScreen("handoff");
   }
 
-  function startSecondPlayer() {
-    state.currentPlayer = 1;
+  function startNextPlayerTurn() {
+    state.currentPlayer += 1;
     state.currentQuestion = 0;
     state.selected = null;
     showScreen("quiz");
@@ -496,30 +443,36 @@
 
   function showFinish() {
     clearQuizStage();
-    dom.finishName1.textContent = state.names[0];
-    dom.finishName2.textContent = state.names[1];
+    dom.finishNamesText.textContent = state.names.join(", ");
     showScreen("finish");
   }
 
-  function calculateAffinity(answers1, answers2) {
-    const total = QUESTIONS.length;
-    let matches = 0;
+  function calculateGroupAffinity(allAnswers) {
+    const totalQuestions = QUESTIONS.length;
+    const numPlayers = allAnswers.length;
+    let totalMatches = 0;
+    let totalComparisons = 0;
 
-    for (let index = 0; index < total; index += 1) {
-      const answer1 = answers1[index];
-      const answer2 = answers2[index];
-
-      if (Number.isInteger(answer1) && Number.isInteger(answer2) && answer1 === answer2) {
-        matches += 1;
+    for (let i = 0; i < numPlayers; i++) {
+      for (let j = i + 1; j < numPlayers; j++) {
+        for (let q = 0; q < totalQuestions; q++) {
+          totalComparisons++;
+          if (
+            Number.isInteger(allAnswers[i][q]) &&
+            Number.isInteger(allAnswers[j][q]) &&
+            allAnswers[i][q] === allAnswers[j][q]
+          ) {
+            totalMatches++;
+          }
+        }
       }
     }
 
-    const percent = Math.round(((matches / total) * 100) * 100) / 100;
-
+    const percent = totalComparisons > 0 ? Math.round(((totalMatches / totalComparisons) * 100) * 100) / 100 : 0;
     return {
-      total,
-      matches,
-      differences: total - matches,
+      total: totalComparisons,
+      matches: totalMatches,
+      differences: totalComparisons - totalMatches,
       percent
     };
   }
@@ -530,32 +483,25 @@
   }
 
   function showResults() {
-    const result = calculateAffinity(state.answers[0], state.answers[1]);
+    const result = calculateGroupAffinity(state.answers);
     state.results = result;
 
-    dom.resultName1.textContent = state.names[0];
-    dom.resultName2.textContent = state.names[1];
     dom.matchCount.textContent = String(result.matches);
     dom.diffCount.textContent = String(result.differences);
-    dom.comparisonTotal.textContent = `${result.matches} de ${result.total} coinciden`;
+    dom.comparisonTotal.textContent = `${result.matches} de ${result.total} coincidencias de equipo`;
     dom.resultMessage.textContent = getResultMessage(result.percent);
 
-    renderComparison();
+    renderComparisonGrid();
     showScreen("results");
     animateAffinity(result.percent);
   }
 
-  function renderComparison() {
+  function renderComparisonGrid() {
     dom.comparisonList.innerHTML = "";
 
-    QUESTIONS.forEach((question, index) => {
-      const answer1 = state.answers[0][index];
-      const answer2 = state.answers[1][index];
-      const isMatch =
-        Number.isInteger(answer1) && Number.isInteger(answer2) && answer1 === answer2;
-
+    QUESTIONS.forEach((question, qIndex) => {
       const item = document.createElement("article");
-      item.className = `comparison-item ${isMatch ? "is-match" : "is-diff"}`;
+      item.className = "comparison-item";
 
       const headRow = document.createElement("div");
       headRow.className = "comparison-head-row";
@@ -565,50 +511,34 @@
 
       const number = document.createElement("span");
       number.className = "q-num";
-      number.textContent = String(index + 1).padStart(2, "0");
+      number.textContent = String(qIndex + 1).padStart(2, "0");
 
       const title = document.createElement("h4");
       title.textContent = question.text;
 
       questionWrap.append(number, title);
-
-      const badge = document.createElement("span");
-      badge.className = `result-badge ${isMatch ? "result-badge--match" : "result-badge--diff"}`;
-      badge.innerHTML = isMatch
-        ? '<svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg><span>Coinciden</span>'
-        : '<svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg><span>Diferente</span>';
-
-      headRow.append(questionWrap, badge);
+      headRow.append(questionWrap);
 
       const answersWrap = document.createElement("div");
       answersWrap.className = "comparison-answers";
+      answersWrap.style.gridTemplateColumns = `repeat(${Math.min(state.names.length, 3)}, minmax(0, 1fr))`;
 
-      answersWrap.append(
-        createCompareAnswer(state.names[0], answer1, 1, question),
-        createCompareAnswer(state.names[1], answer2, 2, question)
-      );
+      state.names.forEach((name, pIndex) => {
+        const ansIndex = state.answers[pIndex][qIndex];
+        const ansText = Number.isInteger(ansIndex) ? question.options[ansIndex] : "Sin respuesta";
+
+        const col = document.createElement("div");
+        col.className = `compare-answer compare-answer--${(pIndex % 2) + 1}`;
+        col.innerHTML = `
+          <span class="compare-name">${name}</span>
+          <span class="compare-value">${ansText}</span>
+        `;
+        answersWrap.appendChild(col);
+      });
 
       item.append(headRow, answersWrap);
       dom.comparisonList.appendChild(item);
     });
-  }
-
-  function createCompareAnswer(playerName, answerIndex, playerNumber, question) {
-    const wrapper = document.createElement("div");
-    wrapper.className = `compare-answer compare-answer--${playerNumber}`;
-
-    const name = document.createElement("span");
-    name.className = "compare-name";
-    name.textContent = playerName;
-
-    const value = document.createElement("span");
-    value.className = "compare-value";
-    value.textContent = Number.isInteger(answerIndex)
-      ? question.options[answerIndex] || "Sin respuesta"
-      : "Sin respuesta";
-
-    wrapper.append(name, value);
-    return wrapper;
   }
 
   function formatPercent(value) {
@@ -618,10 +548,7 @@
 
   function animateAffinity(targetPercent) {
     cancelAffinityAnimation();
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     dom.affinityRing.style.setProperty("--p", "0");
     dom.affinityValue.textContent = "0%";
@@ -663,11 +590,10 @@
   }
 
   function repeatQuiz() {
-    if (!state.names[0] || !state.names[1]) {
+    if (state.names.length === 0) {
       showScreen("register");
       return;
     }
-
     resetGame();
     showScreen("quiz");
     renderQuestion();
@@ -675,11 +601,9 @@
 
   function goHome() {
     resetGame();
-    state.names = ["", ""];
+    state.names = [];
     dom.registerForm.reset();
-    clearFieldError(1);
-    clearFieldError(2);
-    dom.formError.textContent = "";
+    renderPlayerInputs();
     showScreen("home");
   }
 

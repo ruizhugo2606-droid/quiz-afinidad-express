@@ -1,76 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#06030f">
-  <meta name="description" content="Quiz de Afinidad Express: descubre qué tan compatible eres con tu futuro compañero de equipo respondiendo 6 preguntas.">
+  <meta name="description"
+    content="Quiz de Afinidad Express: descubre qué tan compatible eres con tu futuro compañero de equipo respondiendo 6 preguntas.">
   <title>Quiz de Afinidad Express</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236d3cf5'/%3E%3Cpath d='M32 49s-15-9-15-20a8 8 0 0 1 15-4 8 8 0 0 1 15 4c0 11-15 20-15 20z' fill='white'/%3E%3C/svg%3E">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236d3cf5'/%3E%3Cpath d='M32 49s-15-9-15-20a8 8 0 0 1 15-4 8 8 0 0 1 15 4c0 11-15 20-15 20z' fill='white'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
   <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M13 5l7 7-7 7"/>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 5l7 7-7 7" />
       </symbol>
-      <symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 12H5M11 19l-7-7 7-7"/>
+      <symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M11 19l-7-7 7-7" />
       </symbol>
-      <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 6 9 17l-5-5"/>
+      <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5" />
       </symbol>
-      <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 6 6 18M6 6l12 12"/>
+      <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18M6 6l12 12" />
       </symbol>
-      <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
       </symbol>
-      <symbol id="icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
+      <symbol id="icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path
+          d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" />
       </symbol>
-      <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="9"/>
-        <circle cx="12" cy="12" r="5"/>
-        <circle cx="12" cy="12" r="1"/>
+      <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1" />
       </symbol>
-      <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+      <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
       </symbol>
-      <symbol id="icon-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M13 2 4.09 12.7a1 1 0 0 0 .77 1.64H11l-1 7.66 8.91-10.7a1 1 0 0 0-.77-1.64H12z"/>
+      <symbol id="icon-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2 4.09 12.7a1 1 0 0 0 .77 1.64H11l-1 7.66 8.91-10.7a1 1 0 0 0-.77-1.64H12z" />
       </symbol>
-      <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+      <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
       </symbol>
-      <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="10" width="16" height="11" rx="2.5"/>
-        <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+      <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="11" rx="2.5" />
+        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
       </symbol>
-      <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12a9 9 0 0 1-15.3 6.4L3 16M3 12a9 9 0 0 1 15.3-6.4L21 8"/>
-        <path d="M3 21v-5h5M21 3v5h-5"/>
+      <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 0 1-15.3 6.4L3 16M3 12a9 9 0 0 1 15.3-6.4L21 8" />
+        <path d="M3 21v-5h5M21 3v5h-5" />
       </symbol>
-      <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m3 11 9-8 9 8"/>
-        <path d="M5 9.5V21h14V9.5"/>
-        <path d="M10 21v-6h4v6"/>
+      <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 11 9-8 9 8" />
+        <path d="M5 9.5V21h14V9.5" />
+        <path d="M10 21v-6h4v6" />
       </symbol>
       <symbol id="icon-heart" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 21s-8.5-5.2-8.5-12A4.8 4.8 0 0 1 12 5.8 4.8 4.8 0 0 1 20.5 9c0 6.8-8.5 12-8.5 12z"/>
+        <path d="M12 21s-8.5-5.2-8.5-12A4.8 4.8 0 0 1 12 5.8 4.8 4.8 0 0 1 20.5 9c0 6.8-8.5 12-8.5 12z" />
       </symbol>
-      <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>
+      <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
       </symbol>
-      <symbol id="icon-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 21V4M5 4h11l-2 4 2 4H5"/>
+      <symbol id="icon-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 21V4M5 4h11l-2 4 2 4H5" />
       </symbol>
     </defs>
   </svg>
@@ -89,121 +110,144 @@
     <section class="screen is-active" id="screen-home" data-screen="home" aria-label="Inicio">
       <div class="panel home-panel">
         <div class="hero-visual" aria-hidden="true">
-          <svg class="team-illustration" viewBox="0 0 520 440" role="img" aria-label="Ilustración de dos personas con una conexión de afinidad">
+          <svg class="team-illustration" viewBox="0 0 520 440" role="img"
+            aria-label="Ilustración de dos personas con una conexión de afinidad">
             <defs>
               <linearGradient id="g-purple" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#8b5cff"/>
-                <stop offset="1" stop-color="#5b2bd6"/>
+                <stop offset="0" stop-color="#8b5cff" />
+                <stop offset="1" stop-color="#5b2bd6" />
               </linearGradient>
               <linearGradient id="g-blue" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#60a5fa"/>
-                <stop offset="1" stop-color="#2563eb"/>
+                <stop offset="0" stop-color="#60a5fa" />
+                <stop offset="1" stop-color="#2563eb" />
               </linearGradient>
               <linearGradient id="g-connection" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#8b5cff"/>
-                <stop offset="1" stop-color="#3b82f6"/>
+                <stop offset="0" stop-color="#8b5cff" />
+                <stop offset="1" stop-color="#3b82f6" />
               </linearGradient>
               <radialGradient id="g-glow">
-                <stop offset="0" stop-color="#7c4dff" stop-opacity=".28"/>
-                <stop offset="1" stop-color="#7c4dff" stop-opacity="0"/>
+                <stop offset="0" stop-color="#7c4dff" stop-opacity=".28" />
+                <stop offset="1" stop-color="#7c4dff" stop-opacity="0" />
               </radialGradient>
               <filter id="soft-shadow" x="-40%" y="-40%" width="180%" height="180%">
-                <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#2b1a5e" flood-opacity=".16"/>
+                <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#2b1a5e" flood-opacity=".16" />
               </filter>
               <filter id="mini-shadow" x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#2b1a5e" flood-opacity=".18"/>
+                <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#2b1a5e" flood-opacity=".18" />
               </filter>
             </defs>
 
-            <circle cx="260" cy="222" r="186" fill="#120d2b"/>
-            <circle cx="260" cy="222" r="186" fill="none" stroke="#3a2f6b" stroke-width="2" stroke-dasharray="4 13" stroke-linecap="round" opacity=".85"/>
-            <circle cx="408" cy="90" r="90" fill="url(#g-glow)"/>
-            <circle cx="105" cy="345" r="100" fill="url(#g-glow)"/>
+            <circle cx="260" cy="222" r="186" fill="#120d2b" />
+            <circle cx="260" cy="222" r="186" fill="none" stroke="#3a2f6b" stroke-width="2" stroke-dasharray="4 13"
+              stroke-linecap="round" opacity=".85" />
+            <circle cx="408" cy="90" r="90" fill="url(#g-glow)" />
+            <circle cx="105" cy="345" r="100" fill="url(#g-glow)" />
 
-            <path d="M132 156c32-42 74-65 128-65s96 23 128 65" fill="none" stroke="url(#g-connection)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 12" opacity=".55"/>
+            <path d="M132 156c32-42 74-65 128-65s96 23 128 65" fill="none" stroke="url(#g-connection)" stroke-width="3"
+              stroke-linecap="round" stroke-dasharray="2 12" opacity=".55" />
 
             <g transform="rotate(-6 140 215)" filter="url(#soft-shadow)">
-              <rect x="52" y="98" width="176" height="238" rx="30" fill="#1a1438"/>
-              <rect x="52" y="98" width="176" height="238" rx="30" fill="none" stroke="#332a63" stroke-width="2"/>
-              <circle cx="140" cy="180" r="48" fill="#ffdcc5"/>
-              <path d="M92 180c-2-34 21-58 49-58s48 21 47 51c-12-14-27-21-47-21-21 0-36 8-49 23z" fill="#33235f"/>
-              <circle cx="124" cy="180" r="4" fill="#33235f"/>
-              <circle cx="156" cy="180" r="4" fill="#33235f"/>
-              <path d="M129 197c7 6 16 6 23 0" fill="none" stroke="#c96a5c" stroke-width="3" stroke-linecap="round"/>
-              <rect x="92" y="248" width="96" height="13" rx="6.5" fill="#2e2560"/>
-              <rect x="108" y="272" width="64" height="10" rx="5" fill="#241d4a"/>
-              <circle cx="140" cy="306" r="18" fill="url(#g-purple)"/>
-              <path d="m133 306 5 5 9-10" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="52" y="98" width="176" height="238" rx="30" fill="#1a1438" />
+              <rect x="52" y="98" width="176" height="238" rx="30" fill="none" stroke="#332a63" stroke-width="2" />
+              <circle cx="140" cy="180" r="48" fill="#ffdcc5" />
+              <path d="M92 180c-2-34 21-58 49-58s48 21 47 51c-12-14-27-21-47-21-21 0-36 8-49 23z" fill="#33235f" />
+              <circle cx="124" cy="180" r="4" fill="#33235f" />
+              <circle cx="156" cy="180" r="4" fill="#33235f" />
+              <path d="M129 197c7 6 16 6 23 0" fill="none" stroke="#c96a5c" stroke-width="3" stroke-linecap="round" />
+              <rect x="92" y="248" width="96" height="13" rx="6.5" fill="#2e2560" />
+              <rect x="108" y="272" width="64" height="10" rx="5" fill="#241d4a" />
+              <circle cx="140" cy="306" r="18" fill="url(#g-purple)" />
+              <path d="m133 306 5 5 9-10" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round" />
             </g>
 
             <g transform="rotate(6 380 215)" filter="url(#soft-shadow)">
-              <rect x="292" y="98" width="176" height="238" rx="30" fill="#1a1438"/>
-              <rect x="292" y="98" width="176" height="238" rx="30" fill="none" stroke="#2b3768" stroke-width="2"/>
-              <circle cx="380" cy="180" r="48" fill="#f3c9aa"/>
-              <path d="M332 180c-2-35 22-60 50-59 27 1 47 21 46 55-9-6-16-14-22-25-15 19-41 26-74 29z" fill="#1f2a52"/>
-              <circle cx="404" cy="162" r="15" fill="#1f2a52"/>
-              <circle cx="364" cy="180" r="4" fill="#1f2a52"/>
-              <circle cx="396" cy="180" r="4" fill="#1f2a52"/>
-              <path d="M369 197c7 6 16 6 23 0" fill="none" stroke="#b8544c" stroke-width="3" stroke-linecap="round"/>
-              <rect x="332" y="248" width="96" height="13" rx="6.5" fill="#233159"/>
-              <rect x="348" y="272" width="64" height="10" rx="5" fill="#1d2947"/>
-              <circle cx="380" cy="306" r="18" fill="url(#g-blue)"/>
-              <path d="m373 306 5 5 9-10" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="292" y="98" width="176" height="238" rx="30" fill="#1a1438" />
+              <rect x="292" y="98" width="176" height="238" rx="30" fill="none" stroke="#2b3768" stroke-width="2" />
+              <circle cx="380" cy="180" r="48" fill="#f3c9aa" />
+              <path d="M332 180c-2-35 22-60 50-59 27 1 47 21 46 55-9-6-16-14-22-25-15 19-41 26-74 29z" fill="#1f2a52" />
+              <circle cx="404" cy="162" r="15" fill="#1f2a52" />
+              <circle cx="364" cy="180" r="4" fill="#1f2a52" />
+              <circle cx="396" cy="180" r="4" fill="#1f2a52" />
+              <path d="M369 197c7 6 16 6 23 0" fill="none" stroke="#b8544c" stroke-width="3" stroke-linecap="round" />
+              <rect x="332" y="248" width="96" height="13" rx="6.5" fill="#233159" />
+              <rect x="348" y="272" width="64" height="10" rx="5" fill="#1d2947" />
+              <circle cx="380" cy="306" r="18" fill="url(#g-blue)" />
+              <path d="m373 306 5 5 9-10" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round" />
             </g>
 
             <g filter="url(#mini-shadow)">
-              <circle cx="260" cy="205" r="58" fill="url(#g-purple)"/>
-              <circle cx="260" cy="205" r="58" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="2"/>
-              <path d="M260 229s-21-12.8-21-29.5A11.8 11.8 0 0 1 260 192a11.8 11.8 0 0 1 21 7.5c0 16.7-21 29.5-21 29.5z" fill="#ffffff"/>
+              <circle cx="260" cy="205" r="58" fill="url(#g-purple)" />
+              <circle cx="260" cy="205" r="58" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="2" />
+              <path d="M260 229s-21-12.8-21-29.5A11.8 11.8 0 0 1 260 192a11.8 11.8 0 0 1 21 7.5c0 16.7-21 29.5-21 29.5z"
+                fill="#ffffff" />
             </g>
 
             <g filter="url(#mini-shadow)" transform="translate(260 300)">
-              <rect x="-49" y="-21" width="98" height="42" rx="21" fill="#1b1440"/>
-              <text x="0" y="1" text-anchor="middle" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" fill="#5b2bd6">92%</text>
+              <rect x="-49" y="-21" width="98" height="42" rx="21" fill="#1b1440" />
+              <text x="0" y="1" text-anchor="middle" dominant-baseline="middle"
+                font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" fill="#5b2bd6">92%</text>
             </g>
 
             <g transform="translate(58 56) rotate(-8)">
-              <rect x="0" y="0" width="132" height="40" rx="20" fill="#1b1440" filter="url(#mini-shadow)"/>
-              <circle cx="22" cy="20" r="12" fill="#2b2360"/>
-              <path d="M18 20h8M22 16v8" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
-              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="700" fill="#e9e4ff">6 preguntas</text>
+              <rect x="0" y="0" width="132" height="40" rx="20" fill="#1b1440" filter="url(#mini-shadow)" />
+              <circle cx="22" cy="20" r="12" fill="#2b2360" />
+              <path d="M18 20h8M22 16v8" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" />
+              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif"
+                font-size="12.5" font-weight="700" fill="#e9e4ff">6 preguntas</text>
             </g>
 
             <g transform="translate(344 52) rotate(7)">
-              <rect x="0" y="0" width="120" height="40" rx="20" fill="#1b1440" filter="url(#mini-shadow)"/>
-              <circle cx="22" cy="20" r="12" fill="#152a4d"/>
-              <path d="M17 24V17m5 7v-4m5 4v-9" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
-              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="700" fill="#e9e4ff">Resultado</text>
+              <rect x="0" y="0" width="120" height="40" rx="20" fill="#1b1440" filter="url(#mini-shadow)" />
+              <circle cx="22" cy="20" r="12" fill="#152a4d" />
+              <path d="M17 24V17m5 7v-4m5 4v-9" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" />
+              <text x="42" y="21" dominant-baseline="middle" font-family="'Plus Jakarta Sans', sans-serif"
+                font-size="12.5" font-weight="700" fill="#e9e4ff">Resultado</text>
             </g>
 
             <g fill="#8b5cff" opacity=".65">
-              <path d="M92 96v12M86 102h12" stroke="#8b5cff" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M430 300v12M424 306h12" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M92 96v12M86 102h12" stroke="#8b5cff" stroke-width="2.5" stroke-linecap="round" />
+              <path d="M430 300v12M424 306h12" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
             </g>
-            <circle cx="458" cy="180" r="5" fill="#60a5fa" opacity=".6"/>
-            <circle cx="72" cy="258" r="4" fill="#8b5cff" opacity=".6"/>
-            <circle cx="326" cy="66" r="4" fill="#8b5cff" opacity=".5"/>
+            <circle cx="458" cy="180" r="5" fill="#60a5fa" opacity=".6" />
+            <circle cx="72" cy="258" r="4" fill="#8b5cff" opacity=".6" />
+            <circle cx="326" cy="66" r="4" fill="#8b5cff" opacity=".5" />
           </svg>
         </div>
 
         <div class="hero-content">
           <div class="brand-mark">
-            <span class="brand-icon"><svg class="icon"><use href="#icon-users"></use></svg></span>
+            <span class="brand-icon"><svg class="icon">
+                <use href="#icon-users"></use>
+              </svg></span>
             <span>Team Match <span class="brand-sep">/</span> Express</span>
           </div>
-          <span class="eyebrow"><svg class="icon"><use href="#icon-sparkles"></use></svg> 6 preguntas · 2 participantes · 1 resultado</span>
+          <span class="eyebrow"><svg class="icon">
+              <use href="#icon-sparkles"></use>
+            </svg> 6 preguntas · Múltiples participantes · 1 resultado</span>
           <h1>Quiz de <span class="gradient-text">Afinidad Express</span></h1>
           <p class="lead">Descubre qué tan compatible eres con tu futuro compañero de equipo.</p>
           <div class="feature-pills">
-            <span class="pill"><svg class="icon"><use href="#icon-list"></use></svg> 6 preguntas</span>
-            <span class="pill"><svg class="icon"><use href="#icon-users"></use></svg> 2 participantes</span>
-            <span class="pill"><svg class="icon"><use href="#icon-bolt"></use></svg> Resultado al instante</span>
+            <span class="pill"><svg class="icon">
+                <use href="#icon-list"></use>
+              </svg> 6 preguntas</span>
+            <span class="pill"><svg class="icon">
+                <use href="#icon-users"></use>
+              </svg> Múltiples participantes</span>
+            <span class="pill"><svg class="icon">
+                <use href="#icon-bolt"></use>
+              </svg> Resultado al instante</span>
           </div>
           <button class="btn btn-primary btn-lg" type="button" id="btn-start">
             Comenzar
-            <svg class="icon"><use href="#icon-arrow-right"></use></svg>
+            <svg class="icon">
+              <use href="#icon-arrow-right"></use>
+            </svg>
           </button>
-          <p class="home-note"><svg class="icon"><use href="#icon-lock"></use></svg> Sin registros. Todo se calcula en tu dispositivo.</p>
+          <p class="home-note"><svg class="icon">
+              <use href="#icon-lock"></use>
+            </svg> Sin registros. Todo se calcula en tu dispositivo.</p>
         </div>
       </div>
     </section>
@@ -212,52 +256,54 @@
       <div class="panel narrow-panel">
         <div class="panel-topbar">
           <button class="btn btn-ghost btn-icon-text" type="button" data-go-home>
-            <svg class="icon"><use href="#icon-arrow-left"></use></svg>
+            <svg class="icon">
+              <use href="#icon-arrow-left"></use>
+            </svg>
             Inicio
           </button>
           <span class="step-chip">Paso 1 de 2</span>
         </div>
 
         <div class="panel-head">
-          <span class="section-icon"><svg class="icon"><use href="#icon-users"></use></svg></span>
+          <span class="section-icon"><svg class="icon">
+              <use href="#icon-users"></use>
+            </svg></span>
           <h2>¿Quiénes van a jugar?</h2>
-          <p>Escribe los nombres de los dos participantes. Responderán las mismas 6 preguntas, cada uno en su turno.</p>
+          <p>Selecciona cuántos participan y escribe sus nombres. Cada uno responderá las 6 preguntas en su turno.</p>
         </div>
 
         <form id="register-form" novalidate>
-          <div class="players-grid">
-            <div class="field" id="field-name-1">
-              <label class="field-label" for="name-1">
-                <span class="player-dot player-dot--1">1</span>
-                Participante 1
-              </label>
-              <div class="input-wrap">
-                <svg class="icon input-icon"><use href="#icon-user"></use></svg>
-                <input type="text" id="name-1" name="name-1" placeholder="Ej. Ana" autocomplete="off" maxlength="24" aria-describedby="error-name-1" required>
-              </div>
-              <span class="field-error" id="error-name-1" role="alert"></span>
+          <div class="field" style="margin-bottom: 20px;">
+            <label class="field-label" for="player-count">¿Cuántos van a participar?</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon">
+                <use href="#icon-users"></use>
+              </svg>
+              <select id="player-count" name="player-count"
+                style="width: 100%; padding: 15px 16px 15px 44px; border: 1.5px solid rgba(148, 123, 255, 0.22); border-radius: 14px; outline: none; background: rgba(8, 6, 20, 0.62); color: var(--ink); font-size: 0.98rem; font-weight: 600;">
+                <option value="2">2 participantes</option>
+                <option value="3" selected>3 participantes</option>
+                <option value="4">4 participantes</option>
+                <option value="5">5 participantes</option>
+              </select>
             </div>
+          </div>
 
-            <div class="field" id="field-name-2">
-              <label class="field-label" for="name-2">
-                <span class="player-dot player-dot--2">2</span>
-                Participante 2
-              </label>
-              <div class="input-wrap">
-                <svg class="icon input-icon"><use href="#icon-user"></use></svg>
-                <input type="text" id="name-2" name="name-2" placeholder="Ej. Luis" autocomplete="off" maxlength="24" aria-describedby="error-name-2" required>
-              </div>
-              <span class="field-error" id="error-name-2" role="alert"></span>
-            </div>
+          <div class="players-grid" id="players-inputs" style="grid-template-columns: 1fr; margin-bottom: 16px;">
+            <!-- Los inputs se generan dinámicamente -->
           </div>
 
           <p class="form-error" id="form-error" role="alert"></p>
 
           <button class="btn btn-primary btn-block btn-lg" type="submit" id="btn-continue">
             Continuar
-            <svg class="icon"><use href="#icon-arrow-right"></use></svg>
+            <svg class="icon">
+              <use href="#icon-arrow-right"></use>
+            </svg>
           </button>
-          <p class="privacy-note"><svg class="icon"><use href="#icon-lock"></use></svg> Las respuestas de cada participante se mantienen ocultas hasta el final.</p>
+          <p class="privacy-note"><svg class="icon">
+              <use href="#icon-lock"></use>
+            </svg> Las respuestas de cada participante se mantienen ocultas hasta el final.</p>
         </form>
       </div>
     </section>
@@ -272,7 +318,8 @@
             </span>
             <span class="question-counter" id="question-counter">Pregunta 1 de 6</span>
           </div>
-          <div class="progress" id="progress" role="progressbar" aria-label="Progreso del cuestionario" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1">
+          <div class="progress" id="progress" role="progressbar" aria-label="Progreso del cuestionario"
+            aria-valuemin="0" aria-valuemax="6" aria-valuenow="1">
             <div class="progress-fill" id="progress-fill"></div>
           </div>
         </div>
@@ -289,13 +336,17 @@
 
         <div class="quiz-footer">
           <button class="btn btn-ghost" type="button" id="btn-prev">
-            <svg class="icon"><use href="#icon-arrow-left"></use></svg>
+            <svg class="icon">
+              <use href="#icon-arrow-left"></use>
+            </svg>
             Anterior
           </button>
           <p class="answer-hint" id="answer-hint">Selecciona una opción para continuar</p>
           <button class="btn btn-primary" type="button" id="btn-next" disabled>
             <span id="btn-next-label">Siguiente</span>
-            <svg class="icon"><use href="#icon-arrow-right"></use></svg>
+            <svg class="icon">
+              <use href="#icon-arrow-right"></use>
+            </svg>
           </button>
         </div>
       </div>
@@ -304,19 +355,29 @@
     <section class="screen" id="screen-handoff" data-screen="handoff" aria-label="Cambio de turno">
       <div class="panel center-panel narrow-panel">
         <div class="turn-visual" aria-hidden="true">
-          <span class="turn-avatar turn-avatar--one"><svg class="icon"><use href="#icon-check"></use></svg></span>
+          <span class="turn-avatar turn-avatar--one"><svg class="icon">
+              <use href="#icon-check"></use>
+            </svg></span>
           <span class="turn-connector"></span>
-          <span class="turn-avatar turn-avatar--two"><svg class="icon"><use href="#icon-user"></use></svg></span>
+          <span class="turn-avatar turn-avatar--two"><svg class="icon">
+              <use href="#icon-user"></use>
+            </svg></span>
         </div>
         <span class="step-chip">Turno completado</span>
         <h2>¡Listo!</h2>
-        <p class="lead">Ahora es el turno de <strong class="highlight-name" id="handoff-next-name">Participante 2</strong>.</p>
-        <p class="muted">Pasa el dispositivo a tu compañero. Sus respuestas anteriores están guardadas y permanecen ocultas.</p>
+        <p class="lead">Ahora es el turno de <strong class="highlight-name" id="handoff-next-name">Participante
+            2</strong>.</p>
+        <p class="muted">Pasa el dispositivo a tu compañero. Sus respuestas anteriores están guardadas y permanecen
+          ocultas.</p>
         <button class="btn btn-primary btn-block btn-lg" type="button" id="btn-handoff">
           Comenzar turno de <span id="handoff-btn-name">Participante 2</span>
-          <svg class="icon"><use href="#icon-arrow-right"></use></svg>
+          <svg class="icon">
+            <use href="#icon-arrow-right"></use>
+          </svg>
         </button>
-        <p class="secrecy-note"><svg class="icon"><use href="#icon-lock"></use></svg> Nadie podrá ver las respuestas del primer turno.</p>
+        <p class="secrecy-note"><svg class="icon">
+            <use href="#icon-lock"></use>
+          </svg> Nadie podrá ver las respuestas del primer turno.</p>
       </div>
     </section>
 
@@ -324,18 +385,23 @@
       <div class="panel center-panel narrow-panel">
         <div class="finish-visual" aria-hidden="true">
           <span class="finish-ring"></span>
-          <span class="finish-check"><svg class="icon"><use href="#icon-check"></use></svg></span>
+          <span class="finish-check"><svg class="icon">
+              <use href="#icon-check"></use>
+            </svg></span>
           <span class="finish-spark finish-spark--one"></span>
           <span class="finish-spark finish-spark--two"></span>
           <span class="finish-spark finish-spark--three"></span>
         </div>
         <span class="step-chip">Paso 2 de 2</span>
         <h2>¡Cuestionario completado!</h2>
-        <p class="lead"><strong id="finish-name-1">Participante 1</strong> y <strong id="finish-name-2">Participante 2</strong> ya respondieron las 6 preguntas.</p>
-        <p class="muted">Es momento de descubrir su nivel de afinidad.</p>
+        <!-- CAMBIA ESTA LÍNEA DE AQUÍ ABAJO -->
+        <p class="lead">Todos los participantes (<strong id="finish-names-text">Participantes</strong>) ya respondieron las 6 preguntas.</p>
+        <p class="muted">Es momento de descubrir su nivel de afinidad grupal.</p>
         <button class="btn btn-primary btn-block btn-lg" type="button" id="btn-results">
           Ver resultados
-          <svg class="icon"><use href="#icon-chart"></use></svg>
+          <svg class="icon">
+            <use href="#icon-chart"></use>
+          </svg>
         </button>
       </div>
     </section>
@@ -346,7 +412,9 @@
           <span class="step-chip">Resultado final</span>
           <div class="result-names">
             <span class="name-chip name-chip--1" id="result-name-1">Participante 1</span>
-            <span class="heart-badge"><svg class="icon"><use href="#icon-heart"></use></svg></span>
+            <span class="heart-badge"><svg class="icon">
+                <use href="#icon-heart"></use>
+              </svg></span>
             <span class="name-chip name-chip--2" id="result-name-2">Participante 2</span>
           </div>
 
@@ -364,12 +432,16 @@
           <h2 class="result-message" id="result-message">Calculando afinidad...</h2>
           <div class="result-stats">
             <div class="stat stat--match">
-              <span class="stat-icon"><svg class="icon"><use href="#icon-check"></use></svg></span>
+              <span class="stat-icon"><svg class="icon">
+                  <use href="#icon-check"></use>
+                </svg></span>
               <span class="stat-value" id="match-count">0</span>
               <span class="stat-label">Coincidencias</span>
             </div>
             <div class="stat stat--diff">
-              <span class="stat-icon"><svg class="icon"><use href="#icon-x"></use></svg></span>
+              <span class="stat-icon"><svg class="icon">
+                  <use href="#icon-x"></use>
+                </svg></span>
               <span class="stat-value" id="diff-count">0</span>
               <span class="stat-label">Diferencias</span>
             </div>
@@ -379,7 +451,9 @@
         <div class="panel comparison-panel">
           <div class="comparison-head">
             <div>
-              <span class="eyebrow eyebrow--plain"><svg class="icon"><use href="#icon-list"></use></svg> Respuesta por respuesta</span>
+              <span class="eyebrow eyebrow--plain"><svg class="icon">
+                  <use href="#icon-list"></use>
+                </svg> Respuesta por respuesta</span>
               <h3>Comparación de respuestas</h3>
             </div>
             <span class="comparison-total" id="comparison-total">0 de 6 coinciden</span>
@@ -389,11 +463,15 @@
 
         <div class="result-actions">
           <button class="btn btn-primary" type="button" id="btn-repeat">
-            <svg class="icon"><use href="#icon-refresh"></use></svg>
+            <svg class="icon">
+              <use href="#icon-refresh"></use>
+            </svg>
             Repetir cuestionario
           </button>
           <button class="btn btn-ghost" type="button" data-go-home>
-            <svg class="icon"><use href="#icon-home"></use></svg>
+            <svg class="icon">
+              <use href="#icon-home"></use>
+            </svg>
             Volver al inicio
           </button>
         </div>
@@ -404,4 +482,5 @@
 
   <script src="js/app.js"></script>
 </body>
+
 </html>
